@@ -37,46 +37,12 @@ def tweet_message(api, message):
 
 
 def lastfmconnect():
-    # Lastfm config file parsing
-    user_config_dir = os.path.expanduser("~/.config/lastfm_pg/")
-    try:
-        config = configparser.ConfigParser()
-        config.read(user_config_dir + "config.ini")
-        API_KEY = config["lastfm"]["API_KEY"]
-        API_SECRET = config["lastfm"]["API_SECRET"]
-    except Exception as e:
-        logger.error(
-            (
-                "Error with the config file. Be sure to have a valid "
-                "~/.config/lastfm_pg/config.ini file. Error : %s"
-            ),
-            e,
-        )
-        if not os.path.exists(user_config_dir):
-            logger.info(
-                (
-                    "Configuration folder not found. "
-                    "Creating ~/.config/lastfm_pg/."
-                )
-            )
-            os.makedirs(user_config_dir)
-        if not os.path.isfile(user_config_dir + "config.ini"):
-            sample_config = (
-                "[lastfm]\n"
-                "API_KEY=API_KEY_HERE\n"
-                "API_SECRET=API_SECRET_HERE\n"
-            )
-            with open(user_config_dir + "config.ini", "w") as f:
-                f.write(sample_config)
-            logger.info(
-                (
-                    "A sample configuration file has been created at "
-                    "~/.config/lastfm_pg/config.ini. Go to "
-                    "https://www.last.fm/api to create your own API keys "
-                    "and put them in the configuration file."
-                )
-            )
-        exit()
+    config = configparser.ConfigParser()
+    # same directory as the script
+    config.read("config.ini")
+    API_KEY = config["lastfm"]["API_KEY"]
+    API_SECRET = config["lastfm"]["API_SECRET"]
+
     network = pylast.LastFMNetwork(api_key=API_KEY, api_secret=API_SECRET)
     return network
 
@@ -181,7 +147,9 @@ def main():
 
 def parse_args():
     format = "%(levelname)s :: %(message)s"
-    parser = argparse.ArgumentParser(description="Python skeleton")
+    parser = argparse.ArgumentParser(
+        description="Generate playlist of a user's favorite most played tracks for the last week and post it to twitter."
+    )
     parser.add_argument(
         "--debug",
         help="Display debugging information",
@@ -189,9 +157,6 @@ def parse_args():
         dest="loglevel",
         const=logging.DEBUG,
         default=logging.INFO,
-    )
-    parser.add_argument(
-        "positional_argument", nargs="?", type=str, help="Positional argument"
     )
     parser.add_argument("--username", "-u", help="Lastfm username", type=str)
     parser.add_argument(
