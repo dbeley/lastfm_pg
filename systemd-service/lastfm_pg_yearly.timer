@@ -1,0 +1,9 @@
+[Unit]
+Description=lastfm_pg_yearly.timer
+
+[Timer]
+OnCalendar=yearly
+Persistent=true
+
+[Install]
+WantedBy=timers.target
