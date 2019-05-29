@@ -154,7 +154,6 @@ def main():
                 break
         count -= 1
 
-    logger.debug("Exporting playlist")
     Path("Exports").mkdir(parents=True, exist_ok=True)
     if args.timeframe == "7day":
         start = begin_time - datetime.timedelta(days=begin_time.weekday())
@@ -196,10 +195,12 @@ def main():
         export_filename,
     )
 
+    # Exporting playlist
     with open(export_filename, "w") as f:
         for index, track in reversed(list(enumerate(playlist_tracks, 1))):
             f.write(f"{str(index).zfill(2)}: {track.artist} - {track.title}\n")
 
+    # Creating twitter message list
     headers_message = [title, "Made with https://github.com/dbeley/lastfm_pg"]
     list_message = []
     # Reversed order so it goes from 10 to 1
@@ -210,10 +211,10 @@ def main():
         list_message.append(
             f"{str(index).zfill(2)}: {track.artist} - {track.title}"
         )
-
     list_message.insert(0, headers_message[0])
     list_message.append(headers_message[1])
 
+    # Upload to twitter
     if args.no_upload_twitter:
         logger.info("No posting mode activated.")
     else:
