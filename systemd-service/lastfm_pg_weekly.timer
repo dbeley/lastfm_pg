@@ -2,7 +2,8 @@
 Description=lastfm_pg_weekly.timer
 
 [Timer]
-OnCalendar=*-*-* 10:00:00
+#OnCalendar=weekly
+OnCalendar=Mon *-*-* 09:30:00
 Persistent=true
 
 [Install]

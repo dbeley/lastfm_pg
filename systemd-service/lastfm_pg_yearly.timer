@@ -2,7 +2,7 @@
 Description=lastfm_pg_yearly.timer
 
 [Timer]
-OnCalendar=yearly
+OnCalendar=*-1-1 08:30:00
 Persistent=true
 
 [Install]
