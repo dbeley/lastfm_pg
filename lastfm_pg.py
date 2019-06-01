@@ -42,6 +42,7 @@ def tweet_list_message(api, list_message):
     iterator = iter(list_message)
     list_tweets_temp = []
     list_tweets = []
+    # Cut the message by chunks of 280 characters
     while True:
         try:
             message = next(iterator)
@@ -201,7 +202,8 @@ def main():
             f.write(f"{str(index).zfill(2)}: {track.artist} - {track.title}\n")
 
     # Creating twitter message list
-    headers_message = [title, "Made with https://github.com/dbeley/lastfm_pg"]
+    # headers_message = [title, "Made with https://github.com/dbeley/lastfm_pg"]
+    headers_message = [title, "#lastfm"]
     list_message = []
     # Reversed order so it goes from 10 to 1
     for index, track in reversed(list(enumerate(playlist_tracks, 1))):
