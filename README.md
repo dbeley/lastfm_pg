@@ -37,8 +37,9 @@ optional arguments:
   -h, --help            show this help message and exit
   --debug               Display debugging information
   --username USERNAME, -u USERNAME
-                        Lastfm username
-  --no_upload           Disable the social media upload. Use it for debugging
+                        Lastfm username (default : username section of the
+                        config.ini file).
+  --no_upload           Disable the upload. Use it for debugging.
   --timeframe TIMEFRAME, -t TIMEFRAME
                         Timeframe (Accepted values : 7day, 1month, 3month,
                         6month, 12month, overall. Default : 7day).

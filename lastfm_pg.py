@@ -65,6 +65,14 @@ def mastodonconnect():
     return mastodon
 
 
+def lastfmconnect():
+    api_key = config["lastfm"]["api_key"]
+    api_secret = config["lastfm"]["api_secret"]
+
+    network = pylast.LastFMNetwork(api_key=api_key, api_secret=api_secret)
+    return network
+
+
 def tweet_list_message(api, list_message, social_media):
     if social_media == "mastodon":
         max_characters = MASTODON_MAX_CHARACTERS
@@ -96,7 +104,7 @@ def tweet_list_message(api, list_message, social_media):
             logger.debug("Reached end of list_message.")
             break
     max_index = len(list_tweets)
-    logger.debug("max_index : %s", max_index)
+    logger.debug("max_index : %s.", max_index)
     list_formatted_tweets = []
     for index, tweet in enumerate(list_tweets, 1):
         message = "\n".join(tweet)
@@ -106,22 +114,13 @@ def tweet_list_message(api, list_message, social_media):
             list_formatted_tweets.append(f"{message}")
 
     for index, tweet in enumerate(list_formatted_tweets, 1):
-        logger.debug("Posting tweet %s", index)
+        logger.debug("Posting tweet %s.", index)
         if social_media == "mastodon":
+            logger.info("Posting to mastodon.")
             api.status_post(tweet)
         elif social_media == "twitter":
+            logger.info("Posting to twitter.")
             api.update_status(status=tweet)
-
-
-def lastfmconnect():
-    config = configparser.ConfigParser()
-    # same directory as the script
-    config.read("config.ini")
-    api_key = config["lastfm"]["api_key"]
-    api_secret = config["lastfm"]["api_secret"]
-
-    network = pylast.LastFMNetwork(api_key=api_key, api_secret=api_secret)
-    return network
 
 
 def main():
@@ -132,9 +131,7 @@ def main():
         logger.debug("No upload mode activated.")
     else:
         if social_media not in SUPPORTED_SOCIAL_MEDIA:
-            logger.error(
-                "Social media %s not supported. Exiting.", social_media
-            )
+            logger.error("%s not supported. Exiting.", social_media)
             exit()
         elif social_media == "twitter":
             api = twitterconnect()
@@ -142,7 +139,7 @@ def main():
             api = mastodonconnect()
     if args.timeframe not in TIMEFRAME_VALUES:
         logger.error(
-            "Incorrect value %s for timeframe. Accepted values : %s",
+            "Incorrect value %s for timeframe. Accepted values : %s.",
             args.columns,
             TIMEFRAME_VALUES,
         )
@@ -150,26 +147,26 @@ def main():
 
     if args.username:
         try:
-            users = [x.strip() for x in args.username.split(",")]
-            user = network.get_user(users[0])
+            username = args.username
+            user = network.get_user(username)
         except Exception as e:
-            logger.error("Error : %s", e)
+            logger.error("Error : %s.", e)
             exit()
     else:
-        logger.error("Use the -u/--username flag to set an username.")
-        exit()
+        username = config["lastfm"]["username"]
+        user = network.get_user(username)
 
     # List of all loved tracks
     # Need to extract all loved tracks, get_userloved() function doesn't seems to work
-    logger.info("Getting all loved tracks for user %s", users[0])
+    logger.info("Getting all loved tracks for user %s.", username)
     loved_tracks = user.get_loved_tracks(limit=None)
     loved_tracks = [x.track for x in loved_tracks]
 
     # List of recently played tracks
     logger.info(
-        "Getting top tracks for timeframe %s for user %s",
+        "Getting top tracks for timeframe %s for user %s.",
         args.timeframe,
-        users[0],
+        username,
     )
     top_tracks = user.get_top_tracks(period=args.timeframe, limit=1000)
 
@@ -186,11 +183,11 @@ def main():
     # Create final playlist
     playlist_tracks = []
     count = max(dd_tracks.keys())
-    logger.debug("Creating playlist")
+    logger.info("Creating playlist.")
     while len(playlist_tracks) <= PLAYLIST_LENGTH | count >= 1:
         if len(playlist_tracks) >= PLAYLIST_LENGTH:
             break
-        logger.debug("Length playlist : %s", len(playlist_tracks))
+        logger.debug("Length playlist : %s.", len(playlist_tracks))
         # randomize to not take the first item by alphabetical order
         randomized_dd_tracks = random.sample(
             dd_tracks[count], len(dd_tracks[count])
@@ -224,12 +221,13 @@ def main():
         export_filename = f"Exports/playlist_overall_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
 
     logger.debug(
-        "timeframe : %s, title : %s, export_filename : %s",
+        "timeframe : %s, title : %s, export_filename : %s.",
         args.timeframe,
         title,
         export_filename,
     )
 
+    logger.info("Exporting playlist to %s.", export_filename)
     # Exporting playlist
     with open(export_filename, "w") as f:
         for index, track in reversed(list(enumerate(playlist_tracks, 1))):
@@ -242,7 +240,7 @@ def main():
     # Reversed order so it goes from 10 to 1
     for index, track in reversed(list(enumerate(playlist_tracks, 1))):
         logger.debug(
-            "%s: %s - %s", str(index).zfill(2), track.artist, track.title
+            "%s: %s - %s.", str(index).zfill(2), track.artist, track.title
         )
         list_message.append(
             f"{str(index).zfill(2)}: {track.artist} - {track.title}"
@@ -250,7 +248,6 @@ def main():
     list_message.insert(0, headers_message[0])
     list_message.append(headers_message[1])
 
-    # Upload to social media
     if not args.no_upload:
         tweet_list_message(api, list_message, social_media)
 
@@ -269,10 +266,15 @@ def parse_args():
         const=logging.DEBUG,
         default=logging.INFO,
     )
-    parser.add_argument("--username", "-u", help="Lastfm username", type=str)
+    parser.add_argument(
+        "--username",
+        "-u",
+        help="Lastfm username (default : username section of the config.ini file).",
+        type=str,
+    )
     parser.add_argument(
         "--no_upload",
-        help="Disable the social media upload. Use it for debugging",
+        help="Disable the upload. Use it for debugging.",
         dest="no_upload",
         action="store_true",
     )
