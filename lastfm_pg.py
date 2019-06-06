@@ -259,7 +259,7 @@ def parse_args():
     format = "%(levelname)s :: %(message)s"
     parser = argparse.ArgumentParser(
         description="Generate playlist of a user's favorite most played tracks\
-                for the last week and post it to twitter."
+                for the last week and post it to twitter or mastodon."
     )
     parser.add_argument(
         "--debug",
