@@ -2,7 +2,7 @@
 
 Generate playlist of a user's favorite most played tracks for the last week and post it to twitter or mastodon.
 
-This utility needs a valid config file with your lastfm API keys (get them at https://www.last.fm/api) and your twitter/mastodon API keys in the same directory as the main script (see config_sample.ini for an example).
+This utility needs a valid config file with your lastfm API keys (get them at https://www.last.fm/api ), twitter API keys (get them at https://developer.twitter.com ) and mastodon account information in the same directory as the main script (see config_sample.ini for an example).
 
 ## Requirements
 
@@ -45,5 +45,5 @@ optional arguments:
                         6month, 12month, overall. Default : 7day).
   --social-media SOCIAL_MEDIA, -s SOCIAL_MEDIA
                         Social media where the playlist will be posted
-                        (twitter or mastodon. Default = twitter).
+                        (twitter or mastodon. Default : twitter).
 ```
