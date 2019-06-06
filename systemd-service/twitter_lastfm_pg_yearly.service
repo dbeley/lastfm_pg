@@ -1,5 +1,5 @@
 [Unit]
-Description=lastfm_pg_yearly.service
+Description=twitter_lastfm_pg_yearly.service
 
 [Service]
 Type=oneshot

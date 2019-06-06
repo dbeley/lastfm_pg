@@ -1,5 +1,5 @@
 [Unit]
-Description=lastfm_pg_weekly.timer
+Description=twitter_lastfm_pg_weekly.timer
 
 [Timer]
 #OnCalendar=weekly
