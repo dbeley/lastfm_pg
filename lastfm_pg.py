@@ -201,9 +201,8 @@ def main():
     Path("Exports").mkdir(parents=True, exist_ok=True)
     if args.timeframe == "7day":
         start = begin_time - datetime.timedelta(days=begin_time.weekday())
-        time = start + datetime.timedelta(days=6)
-        title = f"My most played favorites tracks on #lastfm for the week of {time.strftime('%B %d %Y')}:"
-        export_filename = f"Exports/playlist_weekly_{time.strftime('%d-%m-%Y')}_{social_media}.txt"
+        title = f"My most played favorites tracks on #lastfm for the week of {start.strftime('%B %d %Y')}:"
+        export_filename = f"Exports/playlist_weekly_{start.strftime('%d-%m-%Y')}_{social_media}.txt"
     elif args.timeframe == "1month":
         title = f"My most played favorites tracks on #lastfm for {begin_time.strftime('%B %Y')}."
         export_filename = f"Exports/playlist_monthly_{begin_time.strftime('%m-%Y')}_{social_media}.txt"
