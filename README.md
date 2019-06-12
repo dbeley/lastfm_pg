@@ -8,9 +8,9 @@ This utility needs a valid config file with your lastfm API keys (get them at [l
 
 ## Requirements
 
-  -   pylast
-  -   tweepy
-  -   Mastodon.py
+  *   pylast
+  *   tweepy
+  *   Mastodon.py
 
 ## Installation in a virtualenv (recommended)
 
