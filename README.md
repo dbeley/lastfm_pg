@@ -1,5 +1,7 @@
 # lastfm_pg : lastfm playlist generator
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5e1070dea74c4be1a8c1e2a083b6712f)](https://app.codacy.com/app/dbeley/lastfm_pg?utm_source=github.com&utm_medium=referral&utm_content=dbeley/lastfm_pg&utm_campaign=Badge_Grade_Dashboard)
+
 Generate playlist of a user's favorite most played tracks for the last week and post it to twitter or mastodon.
 
 This utility needs a valid config file with your lastfm API keys (get them at [last.fm/api](https://www.last.fm/api).), twitter API keys (get them at [developer.twitter.com](https://developer.twitter.com).) and mastodon account information in the same directory as the main script (see config_sample.ini for an example).
