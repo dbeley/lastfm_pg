@@ -2,13 +2,13 @@
 
 Generate playlist of a user's favorite most played tracks for the last week and post it to twitter or mastodon.
 
-This utility needs a valid config file with your lastfm API keys (get them at https://www.last.fm/api ), twitter API keys (get them at https://developer.twitter.com ) and mastodon account information in the same directory as the main script (see config_sample.ini for an example).
+This utility needs a valid config file with your lastfm API keys (get them at [last.fm/api](https://www.last.fm/api).), twitter API keys (get them at https://developer.twitter.com ) and mastodon account information in the same directory as the main script (see config_sample.ini for an example).
 
 ## Requirements
 
-- pylast
-- tweepy
-- Mastodon.py
+    - pylast
+    - tweepy
+    - Mastodon.py
 
 ## Installation in a virtualenv (recommended)
 
