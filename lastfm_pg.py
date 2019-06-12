@@ -252,7 +252,7 @@ def main():
 
 
 def parse_args():
-    format = "%(levelname)s :: %(message)s"
+    custom_format = "%(levelname)s :: %(message)s"
     parser = argparse.ArgumentParser(
         description="Generate playlist of a user's favorite most played tracks\
                 for the last week and post it to twitter or mastodon."
@@ -295,7 +295,7 @@ def parse_args():
     )
     parser.set_defaults(no_upload=False)
     args = parser.parse_args()
-    logging.basicConfig(level=args.loglevel, format=format)
+    logging.basicConfig(level=args.loglevel, format=custom_format)
     return args
 
 
