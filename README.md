@@ -2,9 +2,11 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5e1070dea74c4be1a8c1e2a083b6712f)](https://app.codacy.com/app/dbeley/lastfm_pg?utm_source=github.com&utm_medium=referral&utm_content=dbeley/lastfm_pg&utm_campaign=Badge_Grade_Dashboard)
 
-Generate playlist of a user's favorite most played tracks for the last week and post it to twitter or mastodon.
+Generate playlist of a user's favorite most played tracks for a certain timespan and post it to twitter or mastodon.
 
 This utility needs a valid config file with your lastfm API keys (get them at [last.fm/api](https://www.last.fm/api).), twitter API keys (get them at [developer.twitter.com](https://developer.twitter.com).) and mastodon account information in the same directory as the main script (see config_sample.ini for an example).
+
+In order to run the script at a given time, some systemd services are provided in the systemd-service directory. You will have to change them to match your configuration, more specifically the WorkingDirectory and ExecStart directive.
 
 ## Requirements
 
@@ -49,3 +51,11 @@ optional arguments:
                         Social media where the playlist will be posted
                         (twitter or mastodon. Default : twitter).
 ```
+
+## Systemd service
+
+```
+cp systemd-service/* ~/.config/systemd/user/
+systemctl --user daemon-reload
+systemctl --user enable --now twitter_lastfm_pg_weekly.timer
+``` 
