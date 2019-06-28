@@ -12,6 +12,18 @@ def test_create_list_tweet_simple():
         raise AssertionError()
 
 
+def test_create_list_tweet_advanced():
+    playlist = ["#lastfm"] + ["TRACK"] * 200
+    list_tweets = utils.create_list_tweets(playlist, "twitter")
+    print(list_tweets)
+    if not len(list_tweets) == 5:
+        raise AssertionError()
+
+    for i in list_tweets:
+        if not "#lastfm" in i:
+            raise AssertionError()
+
+
 def test_return_export_filename():
     if not utils.return_export_filename(
         begin_time, "7day", "twitter"
