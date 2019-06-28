@@ -123,10 +123,15 @@ def create_list_tweets(list_message, social_media):
             # add username for all twitter messages except the first one
             if index != 1 and twitter_username:
                 message = f"@{twitter_username}\n{message}"
-            # add hashtag + index number
-            list_formatted_tweets.append(
-                f"{message}\n#lastfm [{index}/{max_index}]"
-            )
+            if index != 1:
+                # add hashtag + index number
+                list_formatted_tweets.append(
+                    f"{message}\n#lastfm [{index}/{max_index}]"
+                )
+            else:
+                list_formatted_tweets.append(
+                    f"{message} [{index}/{max_index}]"
+                )
         else:
             # one message, no need for index nor hastag (present in the title)
             list_formatted_tweets.append(f"{message}")
