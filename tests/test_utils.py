@@ -8,7 +8,7 @@ def test_create_list_tweet_simple():
     playlist = ["TRACK 1", "TRACK 2"]
     list_tweets = utils.create_list_tweets(playlist, "twitter")
     print(list_tweets)
-    if not list_tweets == "TRACK 1\nTRACK 2":
+    if not list_tweets == ["TRACK 1\nTRACK 2"]:
         raise AssertionError()
 
 

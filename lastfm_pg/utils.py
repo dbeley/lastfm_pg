@@ -72,14 +72,14 @@ def format_playlist(playlist_tracks, title):
     return list_message
 
 
-def create_list_tweets(list_message, social_media):
+def create_list_tweets(list_message, social_media, twitter_username=None):
     if social_media == "mastodon":
         max_characters = MASTODON_MAX_CHARACTERS
         twitter_username = ""
     elif social_media == "twitter":
-        api = twitterconnect()
+        # api = twitterconnect()
         max_characters = TWITTER_MAX_CHARACTERS
-        twitter_username = get_twitter_username(api)
+        # twitter_username = get_twitter_username(api)
     iterator = iter(list_message)
     list_tweets_temp = []
     list_tweets = []

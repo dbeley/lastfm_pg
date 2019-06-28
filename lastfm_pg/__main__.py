@@ -20,9 +20,6 @@ logger = logging.getLogger()
 logging.getLogger("pylast").setLevel(logging.WARNING)
 begin_time = datetime.datetime.now()
 
-# Need to be changed
-USERNAME = "d_beley"
-PLAYLIST_LENGTH = 10
 TIMEFRAME_VALUES = ["7day", "1month", "3month", "6month", "12month", "overall"]
 SUPPORTED_SOCIAL_MEDIA = ["twitter", "mastodon"]
 
@@ -70,7 +67,14 @@ def main():
     list_message = format_playlist(playlist_tracks, title)
 
     # Create list of tweets complying with the max length of a social media
-    list_tweet = create_list_tweets(list_message, social_media)
+    if social_media == "twitter":
+        api = twitterconnect()
+        twitter_username = get_twitter_username(api)
+        list_tweet = create_list_tweets(
+            list_message, social_media, twitter_username
+        )
+    else:
+        list_tweet = create_list_tweets(list_message, social_media)
     if not args.no_upload:
         upload_list_tweets(list_tweet, social_media)
 
