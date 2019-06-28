@@ -18,11 +18,11 @@ def test_twitterfmapi(twitterapi):
         raise AssertionError()
 
 
-# def test_mastodonapi(mastodonapi):
-#     print(type(mastodonapi))
-#
-#     if not isinstance(mastodonapi, Mastodon):
-#         raise AssertionError()
+def test_mastodonapi(mastodonapi):
+    print(type(mastodonapi))
+
+    if not isinstance(mastodonapi, Mastodon):
+        raise AssertionError()
 
 
 def test_twitterusername(twitterapi):
