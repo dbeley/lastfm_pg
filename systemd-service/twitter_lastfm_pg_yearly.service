@@ -5,7 +5,7 @@ Description=twitter_lastfm_pg_yearly.service
 Type=oneshot
 WorkingDirectory=%h/Documents/lastfm_pg/
 # With pipenv
-ExecStart=%h/Documents/lastfm_pg/.venv/bin/python lastfm_pg.py -u diyod -t 12month
+ExecStart=%h/Documents/lastfm_pg/.venv/bin/lastfm_pg -t 12month
 
 [Install]
 WantedBy=multi-user.target
