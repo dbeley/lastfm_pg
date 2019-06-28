@@ -171,7 +171,6 @@ def export_playlist(playlist_tracks, begin_time, timeframe, social_media):
     export_filename = return_export_filename(
         begin_time, timeframe, social_media
     )
-
     logger.info("Exporting playlist to %s.", export_filename)
     # Exporting playlist
     with open(export_filename, "w") as f:
