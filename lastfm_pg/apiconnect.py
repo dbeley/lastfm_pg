@@ -104,15 +104,18 @@ def mastodonconnect():
 def lastfmconnect():
     api_key = CONFIG["lastfm"]["api_key"]
     api_secret = CONFIG["lastfm"]["api_secret"]
+    username = CONFIG["lastfm"]["username"]
 
-    network = pylast.LastFMNetwork(api_key=api_key, api_secret=api_secret)
+    network = pylast.LastFMNetwork(
+        api_key=api_key, api_secret=api_secret, username=username
+    )
     return network
 
 
-def get_twitter_username():
-    api = twitterconnect()
+def get_twitter_username(api):
     return api.me().screen_name
 
 
-def get_lastfm_username():
-    return CONFIG["lastfm"]["username"]
+def get_lastfm_username(api):
+    # return CONFIG["lastfm"]["username"]
+    return api.username

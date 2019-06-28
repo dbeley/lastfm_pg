@@ -26,10 +26,10 @@ def test_twitterfmapi(twitterapi):
 
 
 def test_twitterusername(twitterapi):
-    if not isinstance(apiconnect.get_twitter_username(), str):
+    if not isinstance(apiconnect.get_twitter_username(twitterapi), str):
         raise AssertionError()
 
 
 def test_lastfmusername(lastfmapi):
-    if not isinstance(apiconnect.get_lastfm_username(), str):
+    if not isinstance(apiconnect.get_lastfm_username(lastfmapi), str):
         raise AssertionError()

@@ -15,7 +15,10 @@ def lastfmapi():
     else:
         api_key = os.environ["LASTFM_API_KEY"]
         api_secret = os.environ["LASTFM_API_SECRET"]
-        network = pylast.LastFMNetwork(api_key=api_key, api_secret=api_secret)
+        username = os.environ["LASTFM_USERNAME"]
+        network = pylast.LastFMNetwork(
+            api_key=api_key, api_secret=api_secret, username=username
+        )
         return network
 
 

@@ -55,7 +55,7 @@ def main():
             logger.error("Error : %s.", e)
             exit()
     else:
-        username = get_lastfm_username()
+        username = get_lastfm_username(network)
         user = network.get_user(username)
 
     playlist_tracks = get_lastfm_playlist(user, args.timeframe)

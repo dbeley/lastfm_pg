@@ -77,8 +77,9 @@ def create_list_tweets(list_message, social_media):
         max_characters = MASTODON_MAX_CHARACTERS
         twitter_username = ""
     elif social_media == "twitter":
+        api = twitterconnect()
         max_characters = TWITTER_MAX_CHARACTERS
-        twitter_username = get_twitter_username()
+        twitter_username = get_twitter_username(api)
     iterator = iter(list_message)
     list_tweets_temp = []
     list_tweets = []
