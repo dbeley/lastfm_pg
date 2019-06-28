@@ -2,7 +2,7 @@ import logging
 import random
 import datetime
 from collections import defaultdict
-from .apiconnect import twitterconnect, mastodonconnect, get_twitter_username
+from .apiconnect import twitterconnect, mastodonconnect
 
 logger = logging.getLogger(__name__)
 PLAYLIST_LENGTH = 10
@@ -77,9 +77,7 @@ def create_list_tweets(list_message, social_media, twitter_username=None):
         max_characters = MASTODON_MAX_CHARACTERS
         twitter_username = ""
     elif social_media == "twitter":
-        # api = twitterconnect()
         max_characters = TWITTER_MAX_CHARACTERS
-        # twitter_username = get_twitter_username(api)
     iterator = iter(list_message)
     list_tweets_temp = []
     list_tweets = []

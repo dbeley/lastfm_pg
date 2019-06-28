@@ -1,7 +1,6 @@
 from lastfm_pg import apiconnect
 import pylast
 import tweepy
-from mastodon import Mastodon
 
 
 def test_lastfmapi(lastfmapi):
@@ -15,13 +14,6 @@ def test_twitterfmapi(twitterapi):
     print(type(twitterapi))
 
     if not isinstance(twitterapi, tweepy.API):
-        raise AssertionError()
-
-
-def test_mastodonapi(mastodonapi):
-    print(type(mastodonapi))
-
-    if not isinstance(mastodonapi, Mastodon):
         raise AssertionError()
 
 
