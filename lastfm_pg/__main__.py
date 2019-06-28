@@ -31,6 +31,7 @@ def main():
     args = parse_args()
     # create sample config file
     check_config()
+
     network = lastfmconnect()
     social_media = args.social_media.lower()
     if args.no_upload:

@@ -15,10 +15,12 @@ CONFIG.read(USER_CONFIG_DIR + "config.ini")
 
 
 def check_config():
+    logger.debug("Checking configuration.")
     user_config_dir = os.path.expanduser("~/.config/lastfm_pg/")
     try:
         config_temp = configparser.ConfigParser()
         config_temp.read(user_config_dir + "config.ini")
+        api_key = config_temp["lastfm"]["api_key"]
     except Exception as e:
         logger.error(
             (
@@ -78,7 +80,7 @@ def twitterconnect():
 def mastodonconnect():
     if not Path("mastodon_clientcred.secret").is_file():
         Mastodon.create_app(
-            "mastodon_bot_lastfm_cg",
+            "mastodon_bot_lastfm_pg",
             api_base_url=CONFIG["mastodon"]["api_base_url"],
             to_file="mastodon_clientcred.secret",
         )

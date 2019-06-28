@@ -46,7 +46,7 @@ def twitterapi():
 #     else:
 #         if not Path("mastodon_clientcred.secret").is_file():
 #             Mastodon.create_app(
-#                 "mastodon_bot_lastfm_cg",
+#                 "mastodon_bot_lastfm_pg",
 #                 api_base_url=os.environ["MASTODON_API_BASE_URL"],
 #                 to_file="mastodon_clientcred.secret",
 #             )

@@ -4,7 +4,9 @@
 
 Generate playlist of a user's favorite most played tracks for a certain timespan and post it to twitter or mastodon.
 
-This utility needs a valid config file with your lastfm API keys (get them at [last.fm/api](https://www.last.fm/api).), twitter API keys (get them at [developer.twitter.com](https://developer.twitter.com).) and mastodon account information in the same directory as the main script (see config_sample.ini for an example).
+This utility needs a valid config file with your lastfm API keys (get them at [last.fm/api](https://www.last.fm/api).), twitter API keys (get them at [developer.twitter.com](https://developer.twitter.com).) and mastodon account information in the ~/.config/lastfm_pg/config.ini file (see config_sample.ini for an example).
+
+Running the script for the first time will generate a sample config file if one doesn't exist yet.
 
 In order to run the script at a given time, some systemd services are provided in the systemd-service directory. You will have to change them to match your configuration, more specifically the WorkingDirectory and ExecStart directive.
 
