@@ -1,5 +1,5 @@
 [Unit]
-Description=mastodon_lastfm_pg_monthly.service
+Description=mastodon_bot_lastfm_pg_monthly.service
 
 [Service]
 Type=oneshot

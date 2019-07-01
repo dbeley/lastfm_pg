@@ -1,5 +1,5 @@
 [Unit]
-Description=mastodon_lastfm_pg_weekly.timer
+Description=mastodon_bot_lastfm_pg_weekly.timer
 
 [Timer]
 #OnCalendar=weekly

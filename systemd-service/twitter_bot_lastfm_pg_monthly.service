@@ -1,11 +1,11 @@
 [Unit]
-Description=mastodon_lastfm_pg_yearly.service
+Description=twitter_bot_lastfm_pg_monthly.service
 
 [Service]
 Type=oneshot
 WorkingDirectory=%h/Documents/lastfm_pg/
 # With pipenv
-ExecStart=%h/Documents/lastfm_pg/.venv/bin/lastfm_pg -t 12month -s mastodon
+ExecStart=%h/Documents/lastfm_pg/.venv/bin/lastfm_pg -t 1month
 
 [Install]
 WantedBy=multi-user.target

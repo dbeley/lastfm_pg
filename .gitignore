@@ -7,3 +7,4 @@ Exports/
 *.secret
 archives/
 *.egg-info/
+*__pycache__/

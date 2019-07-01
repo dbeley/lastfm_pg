@@ -14,7 +14,13 @@ from .utils import (
     export_playlist,
     format_playlist,
 )
-from .apiconnect import lastfmconnect, check_config, get_lastfm_username
+from .apiconnect import (
+    lastfmconnect,
+    check_config,
+    get_lastfm_username,
+    twitterconnect,
+    get_twitter_username,
+)
 
 logger = logging.getLogger()
 logging.getLogger("pylast").setLevel(logging.WARNING)

@@ -1,5 +1,5 @@
 [Unit]
-Description=mastodon_lastfm_pg_yearly.timer
+Description=twitter_bot_lastfm_pg_yearly.timer
 
 [Timer]
 OnCalendar=*-1-1 08:30:00
