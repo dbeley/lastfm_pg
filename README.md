@@ -35,7 +35,8 @@ lastfm_pg -h
 ```
 usage: lastfm_pg [-h] [--debug] [--username USERNAME] [--no_upload]
                  [--timeframe TIMEFRAME] [--social-media SOCIAL_MEDIA]
-                 [--not-only-favorites]
+                 [--not-only-favorites] [--config_file CONFIG_FILE]
+                 [--template_file TEMPLATE_FILE]
 
 Generate playlist of a user's favorite most played tracks for the last week
 and post it to twitter or mastodon.
@@ -56,6 +57,12 @@ optional arguments:
   --not-only-favorites, -n
                         The playlist will be composed of any tracks, not only
                         favorite tracks.
+  --config_file CONFIG_FILE
+                        Path to the config file (Default =
+                        '~/.config/lastfm_pg/config.ini').
+  --template_file TEMPLATE_FILE
+                        Path to the template file for the tweet (Default =
+                        'tweet_template.txt').
 ```
 
 ## Systemd service

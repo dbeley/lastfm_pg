@@ -140,7 +140,7 @@ def parse_args():
     )
     parser.add_argument(
         "--config_file",
-        help="Path of the config file (Default = '~/.config/lastfm_pg/config.ini').",
+        help="Path to the config file (Default = '~/.config/lastfm_pg/config.ini').",
         type=str,
         default="~/.config/lastfm_pg/config.ini",
     )
