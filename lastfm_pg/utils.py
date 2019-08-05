@@ -79,7 +79,10 @@ def format_playlist(playlist_tracks, title):
     return list_message
 
 
-def create_list_tweets(list_message, social_media, twitter_username=None):
+def create_list_tweets(
+    list_message, social_media, hashtag, twitter_username=None
+):
+    # Twitter needs the username to post an answer. Mastodon doesn't.
     if social_media == "mastodon":
         max_characters = MASTODON_MAX_CHARACTERS
         twitter_username = ""
@@ -105,7 +108,7 @@ def create_list_tweets(list_message, social_media, twitter_username=None):
                 # twitter username
                 + len(f"@{twitter_username}")
                 # hashtag
-                + len("#lastfm")
+                + len(hashtag)
             )
             if sum_list_tweets_temp > max_characters - nb_char:
                 logger.debug(
@@ -131,7 +134,7 @@ def create_list_tweets(list_message, social_media, twitter_username=None):
             if index != 1:
                 # add hashtag + index number
                 list_formatted_tweets.append(
-                    f"{message}\n#lastfm [{index}/{max_index}]"
+                    f"{message}\n{hashtag} [{index}/{max_index}]"
                 )
             else:
                 list_formatted_tweets.append(

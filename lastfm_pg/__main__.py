@@ -80,10 +80,12 @@ def main():
             api = twitterconnect()
             twitter_username = get_twitter_username(api)
             list_tweets = create_list_tweets(
-                list_message, social_media, twitter_username
+                list_message, social_media, args.hashtag, twitter_username
             )
         else:
-            list_tweets = create_list_tweets(list_message, social_media)
+            list_tweets = create_list_tweets(
+                list_message, social_media, args.hashtag
+            )
 
         if not args.no_upload:
             upload_list_tweets(list_tweets, social_media)
@@ -127,7 +129,7 @@ def parse_args():
     parser.add_argument(
         "--social-media",
         "-s",
-        help="Social media where the playlist will be posted (twitter or mastodon. Default = twitter).",
+        help="Social media where the playlist will be posted (twitter or mastodon. Default : twitter).",
         type=str,
         default="twitter",
     )
@@ -140,15 +142,21 @@ def parse_args():
     )
     parser.add_argument(
         "--config_file",
-        help="Path to the config file (Default = '~/.config/lastfm_pg/config.ini').",
+        help="Path to the config file (Default : '~/.config/lastfm_pg/config.ini').",
         type=str,
         default="~/.config/lastfm_pg/config.ini",
     )
     parser.add_argument(
         "--template_file",
-        help="Path to the template file for the tweet (Default = 'tweet_template.txt').",
+        help="Path to the template file for the tweet (Default : 'tweet_template.txt').",
         type=str,
         default="tweet_template.txt",
+    )
+    parser.add_argument(
+        "--hashtag",
+        help="Hashtag to insert at the end of each secondary tweets (Default : '#lastfm').",
+        type=str,
+        default="#lastfm",
     )
     parser.set_defaults(no_upload=False, only_favorites=True)
     args = parser.parse_args()
