@@ -10,23 +10,26 @@ TWITTER_MAX_CHARACTERS = 280
 MASTODON_MAX_CHARACTERS = 500
 
 
-def get_lastfm_playlist(user, timeframe):
-    # List of all loved tracks
-    # Need to extract all loved tracks, get_userloved() function doesn't seems to work
-    logger.info("Getting all loved tracks for user %s.", user)
-    loved_tracks = user.get_loved_tracks(limit=None)
-    loved_tracks = [x.track for x in loved_tracks]
-
+def get_lastfm_playlist(user, timeframe, only_favorites=True):
     # List of recently played tracks
     logger.info(
         "Getting top tracks for timeframe %s for user %s.", timeframe, user
     )
     top_tracks = user.get_top_tracks(period=timeframe, limit=1000)
+    if only_favorites:
+        # List of all loved tracks
+        # Need to extract all loved tracks, get_userloved() function doesn't seems to work
+        logger.info("Getting all loved tracks for user %s.", user)
+        loved_tracks = user.get_loved_tracks(limit=None)
+        loved_tracks = [x.track for x in loved_tracks]
 
-    # List of tracks presents in both lists
-    playlist_potential_tracks = [
-        (x.weight, x.item) for x in top_tracks if x.item in loved_tracks
-    ]
+        # List of tracks presents in both lists
+        playlist_potential_tracks = [
+            (x.weight, x.item) for x in top_tracks if x.item in loved_tracks
+        ]
+    else:
+        # List of tracks presents in both lists
+        playlist_potential_tracks = [(x.weight, x.item) for x in top_tracks]
 
     # dict where keys : weight, values : list of tracks
     dd_tracks = defaultdict(list)

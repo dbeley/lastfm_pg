@@ -62,7 +62,9 @@ def main():
         username = get_lastfm_username(network)
         user = network.get_user(username)
 
-    playlist_tracks = get_lastfm_playlist(user, args.timeframe)
+    playlist_tracks = get_lastfm_playlist(
+        user, args.timeframe, args.only_favorites
+    )
 
     Path("Exports").mkdir(parents=True, exist_ok=True)
     export_playlist(playlist_tracks, begin_time, args.timeframe, social_media)
@@ -127,7 +129,14 @@ def parse_args():
         type=str,
         default="twitter",
     )
-    parser.set_defaults(no_upload=False)
+    parser.add_argument(
+        "--not-only-favorites",
+        "-n",
+        help="The playlist will be composed of any tracks, not only favorite tracks.",
+        dest="only_favorites",
+        action="store_false",
+    )
+    parser.set_defaults(no_upload=False, only_favorites=True)
     args = parser.parse_args()
     logging.basicConfig(level=args.loglevel, format=custom_format)
     return args

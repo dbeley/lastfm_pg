@@ -33,8 +33,9 @@ lastfm_pg -h
 ```
 
 ```
-usage: lastfm_pg.py [-h] [--debug] [--username USERNAME] [--no_upload]
-                    [--timeframe TIMEFRAME] [--social-media SOCIAL_MEDIA]
+usage: lastfm_pg [-h] [--debug] [--username USERNAME] [--no_upload]
+                 [--timeframe TIMEFRAME] [--social-media SOCIAL_MEDIA]
+                 [--not-only-favorites]
 
 Generate playlist of a user's favorite most played tracks for the last week
 and post it to twitter or mastodon.
@@ -51,7 +52,10 @@ optional arguments:
                         6month, 12month, overall. Default : 7day).
   --social-media SOCIAL_MEDIA, -s SOCIAL_MEDIA
                         Social media where the playlist will be posted
-                        (twitter or mastodon. Default : twitter).
+                        (twitter or mastodon. Default = twitter).
+  --not-only-favorites, -n
+                        The playlist will be composed of any tracks, not only
+                        favorite tracks.
 ```
 
 ## Systemd service
