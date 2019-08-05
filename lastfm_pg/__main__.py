@@ -106,7 +106,7 @@ def parse_args():
     parser.add_argument(
         "--username",
         "-u",
-        help="Lastfm username (default : username section of the config.ini file).",
+        help="Lastfm usernames, separated by comma (default : username section of the config.ini file).",
         type=str,
     )
     parser.add_argument(

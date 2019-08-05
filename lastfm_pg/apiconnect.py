@@ -9,10 +9,6 @@ from mastodon import Mastodon
 logger = logging.getLogger()
 logging.getLogger("pylast").setLevel(logging.WARNING)
 
-# USER_CONFIG_DIR = os.path.expanduser("~/.config/lastfm_pg/")
-# CONFIG = configparser.ConfigParser()
-# CONFIG.read(USER_CONFIG_DIR + "config.ini")
-
 
 def check_config(config_file):
     config_file = os.path.expanduser(config_file)
@@ -25,9 +21,6 @@ def check_config(config_file):
             CONFIG = configparser.ConfigParser()
             CONFIG.read(config_file)
             api_key = CONFIG["lastfm"]["api_key"]
-            # config_temp = configparser.ConfigParser()
-            # config_temp.read(config_file)
-            # api_key = config_temp["lastfm"]["api_key"]
         except Exception as e:
             logger.error(
                 (
