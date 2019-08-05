@@ -65,3 +65,12 @@ cp systemd-service/* ~/.config/systemd/user/
 systemctl --user daemon-reload
 systemctl --user enable --now twitter_lastfm_pg_weekly.timer
 ``` 
+
+## Template
+
+The posted tweets will follow the template. See the tweet_template.txt file for an example.
+
+Available variables :
+
+- timeframe
+- username

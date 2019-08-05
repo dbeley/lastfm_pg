@@ -33,7 +33,7 @@ SUPPORTED_SOCIAL_MEDIA = ["twitter", "mastodon"]
 def main():
     args = parse_args()
     # create sample config file
-    check_config()
+    check_config(args.config_file)
 
     network = lastfmconnect()
     social_media = args.social_media.lower()
@@ -52,39 +52,41 @@ def main():
         exit()
 
     if args.username:
-        try:
-            username = args.username
-            user = network.get_user(username)
-        except Exception as e:
-            logger.error("Error : %s.", e)
-            exit()
+        list_users = args.username.split(",")
     else:
-        username = get_lastfm_username(network)
+        username = [get_lastfm_username(network)]
         user = network.get_user(username)
 
-    playlist_tracks = get_lastfm_playlist(
-        user, args.timeframe, args.only_favorites
-    )
-
-    Path("Exports").mkdir(parents=True, exist_ok=True)
-    export_playlist(playlist_tracks, begin_time, args.timeframe, social_media)
-
-    title = return_title_playlist(begin_time, args.timeframe)
-
-    # Format playlist "index - artist - title"
-    list_message = format_playlist(playlist_tracks, title)
-
-    # Create list of tweets complying with the max length of a social media
-    if social_media == "twitter":
-        api = twitterconnect()
-        twitter_username = get_twitter_username(api)
-        list_tweet = create_list_tweets(
-            list_message, social_media, twitter_username
+    for user in list_users:
+        user = network.get_user(user)
+        playlist_tracks = get_lastfm_playlist(
+            user, args.timeframe, args.only_favorites
         )
-    else:
-        list_tweet = create_list_tweets(list_message, social_media)
-    if not args.no_upload:
-        upload_list_tweets(list_tweet, social_media)
+
+        Path("Exports").mkdir(parents=True, exist_ok=True)
+        export_playlist(
+            playlist_tracks, begin_time, args.timeframe, social_media, user
+        )
+
+        title = return_title_playlist(
+            begin_time, user, args.timeframe, args.template_file
+        )
+
+        # Format playlist "index: artist - title (playcount)"
+        list_message = format_playlist(playlist_tracks, title)
+
+        # Create list of tweets complying with the max length of a social media
+        if social_media == "twitter":
+            api = twitterconnect()
+            twitter_username = get_twitter_username(api)
+            list_tweets = create_list_tweets(
+                list_message, social_media, twitter_username
+            )
+        else:
+            list_tweets = create_list_tweets(list_message, social_media)
+
+        if not args.no_upload:
+            upload_list_tweets(list_tweets, social_media)
 
 
 def parse_args():
@@ -135,6 +137,18 @@ def parse_args():
         help="The playlist will be composed of any tracks, not only favorite tracks.",
         dest="only_favorites",
         action="store_false",
+    )
+    parser.add_argument(
+        "--config_file",
+        help="Path of the config file (Default = '~/.config/lastfm_pg/config.ini').",
+        type=str,
+        default="~/.config/lastfm_pg/config.ini",
+    )
+    parser.add_argument(
+        "--template_file",
+        help="Path to the template file for the tweet (Default = 'tweet_template.txt').",
+        type=str,
+        default="tweet_template.txt",
     )
     parser.set_defaults(no_upload=False, only_favorites=True)
     args = parser.parse_args()

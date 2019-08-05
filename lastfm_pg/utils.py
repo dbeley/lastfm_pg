@@ -49,7 +49,7 @@ def get_lastfm_playlist(user, timeframe, only_favorites=True):
             dd_tracks[count], len(dd_tracks[count])
         )
         for track in randomized_dd_tracks:
-            playlist_tracks.append(track)
+            playlist_tracks.append([track, count])
             if len(playlist_tracks) >= PLAYLIST_LENGTH:
                 break
         count -= 1
@@ -64,10 +64,14 @@ def format_playlist(playlist_tracks, title):
     # Reversed order so it goes from 10 to 1
     for index, track in reversed(list(enumerate(playlist_tracks, 1))):
         logger.debug(
-            "%s: %s - %s.", str(index).zfill(2), track.artist, track.title
+            "%s: %s - %s (%s).",
+            str(index).zfill(2),
+            track[0].artist,
+            track[0].title,
+            track[1],
         )
         list_message.append(
-            f"{str(index).zfill(2)}: {track.artist} - {track.title}"
+            f"{str(index).zfill(2)}: {track[0].artist} - {track[0].title} ({track[1]} plays)"
         )
     list_message.insert(0, headers_message[0])
     # uncomment if two items in headers_message
@@ -167,51 +171,60 @@ def upload_list_tweets(list_messages, social_media):
             tweet_id = return_infos.id
 
 
-def export_playlist(playlist_tracks, begin_time, timeframe, social_media):
+def export_playlist(
+    playlist_tracks, begin_time, timeframe, social_media, user
+):
     """Export a playlist."""
     export_filename = return_export_filename(
-        begin_time, timeframe, social_media
+        begin_time, timeframe, social_media, user
     )
     logger.info("Exporting playlist to %s.", export_filename)
     # Exporting playlist
     with open(export_filename, "w") as f:
         for index, track in reversed(list(enumerate(playlist_tracks, 1))):
-            f.write(f"{str(index).zfill(2)}: {track.artist} - {track.title}\n")
+            f.write(
+                f"{str(index).zfill(2)}: {track[0].artist} - {track[0].title} ({track[1]} plays)\n"
+            )
 
 
-def return_export_filename(begin_time, timeframe, social_media):
+def return_export_filename(begin_time, timeframe, social_media, user):
     """Return the filename of an exported playlist."""
     if timeframe == "7day":
         start = begin_time - datetime.timedelta(weeks=1)
-        export_filename = f"Exports/playlist_weekly_{start.strftime('%d-%m-%Y')}_{social_media}.txt"
+        export_filename = f"Exports/playlist_{user}_weekly_{start.strftime('%d-%m-%Y')}_{social_media}.txt"
     elif timeframe == "1month":
         start = begin_time - datetime.timedelta(weeks=1)
-        export_filename = f"Exports/playlist_monthly_{begin_time.strftime('%m-%Y')}_{social_media}.txt"
+        export_filename = f"Exports/playlist_{user}_monthly_{begin_time.strftime('%m-%Y')}_{social_media}.txt"
     elif timeframe == "3month":
-        export_filename = f"Exports/playlist_3months_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
+        export_filename = f"Exports/playlist_{user}_3months_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
     elif timeframe == "6month":
-        export_filename = f"Exports/playlist_6months_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
+        export_filename = f"Exports/playlist_{user}_6months_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
     elif timeframe == "12month":
-        export_filename = f"Exports/playlist_12months_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
+        export_filename = f"Exports/playlist_{user}_12months_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
     elif timeframe == "overall":
-        export_filename = f"Exports/playlist_overall_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
+        export_filename = f"Exports/playlist_{user}_overall_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
     return export_filename
 
 
-def return_title_playlist(begin_time, timeframe):
+def return_title_playlist(begin_time, username, timeframe, template_file):
     """Return the title of playlist."""
+
+    with open(template_file, "r") as f:
+        tweet_template = f.read()
     if timeframe == "7day":
         start = begin_time - datetime.timedelta(weeks=1)
-        title = f"My most played favorites tracks on #lastfm for the week of {start.strftime('%B %d %Y')}:"
+        timeframe = f"for the week of {start.strftime('%B %d %Y')}"
     elif timeframe == "1month":
         start = begin_time - datetime.timedelta(weeks=1)
-        title = f"My most played favorites tracks on #lastfm for {start.strftime('%B %Y')}."
+        timeframe = f"for {start.strftime('%B %Y')}"
     elif timeframe == "3month":
-        title = f"My most played favorites tracks on #lastfm for the last 3 months."
+        timeframe = f"for the last 3 months"
     elif timeframe == "6month":
-        title = f"My most played favorites tracks on #lastfm for the last 6 months."
+        timeframe = f"for the last 6 months"
     elif timeframe == "12month":
-        title = f"My most played favorites tracks on #lastfm for the last 12 months."
+        start = begin_time - datetime.timedelta(weeks=1)
+        timeframe = f"for the year {start.strftime('%Y')}"
     elif timeframe == "overall":
-        title = f"My most played favorites tracks on #lastfm ever."
+        timeframe = f"ever."
+    title = eval(tweet_template)
     return title

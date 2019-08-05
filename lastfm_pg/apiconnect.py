@@ -9,26 +9,35 @@ from mastodon import Mastodon
 logger = logging.getLogger()
 logging.getLogger("pylast").setLevel(logging.WARNING)
 
-USER_CONFIG_DIR = os.path.expanduser("~/.config/lastfm_pg/")
-CONFIG = configparser.ConfigParser()
-CONFIG.read(USER_CONFIG_DIR + "config.ini")
+# USER_CONFIG_DIR = os.path.expanduser("~/.config/lastfm_pg/")
+# CONFIG = configparser.ConfigParser()
+# CONFIG.read(USER_CONFIG_DIR + "config.ini")
 
 
-def check_config():
-    logger.debug("Checking configuration.")
+def check_config(config_file):
+    config_file = os.path.expanduser(config_file)
     user_config_dir = os.path.expanduser("~/.config/lastfm_pg/")
-    try:
-        config_temp = configparser.ConfigParser()
-        config_temp.read(user_config_dir + "config.ini")
-        api_key = config_temp["lastfm"]["api_key"]
-    except Exception as e:
-        logger.error(
-            (
-                "Error with the config file. Be sure to have a valid "
-                "~/.config/lastfm_pg/config.ini file. Error : %s"
-            ),
-            e,
-        )
+
+    logger.debug("Checking configuration at %s.", config_file)
+    if Path(config_file).is_file():
+        try:
+            global CONFIG
+            CONFIG = configparser.ConfigParser()
+            CONFIG.read(config_file)
+            api_key = CONFIG["lastfm"]["api_key"]
+            # config_temp = configparser.ConfigParser()
+            # config_temp.read(config_file)
+            # api_key = config_temp["lastfm"]["api_key"]
+        except Exception as e:
+            logger.error(
+                (
+                    "Error with the config file. Be sure to have a valid "
+                    "~/.config/lastfm_pg/config.ini file. Error : %s"
+                ),
+                e,
+            )
+            exit()
+    else:
         if not os.path.exists(user_config_dir):
             logger.info(
                 (
@@ -37,7 +46,7 @@ def check_config():
                 )
             )
             os.makedirs(user_config_dir)
-        if not os.path.isfile(user_config_dir + "config.ini"):
+        if not Path(config_file).is_file():
             sample_config = (
                 "[lastfm]\n"
                 "username=username_here\n"
@@ -55,7 +64,7 @@ def check_config():
                 "login_email=login_email_here\n"
                 "password=password_here\n"
             )
-            with open(user_config_dir + "config.ini", "w") as f:
+            with open(config_file, "w") as f:
                 f.write(sample_config)
             logger.info(
                 (
