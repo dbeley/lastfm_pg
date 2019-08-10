@@ -1,0 +1,11 @@
+[Unit]
+Description=bot_lastfm_pg_weekly.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/Documents/lastfm_pg/
+# With pipenv
+ExecStart=%h/Documents/lastfm_pg/.venv/bin/lastfm_pg
+
+[Install]
+WantedBy=multi-user.target

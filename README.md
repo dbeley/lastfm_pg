@@ -53,7 +53,7 @@ optional arguments:
                         6month, 12month, overall. Default : 7day).
   --social-media SOCIAL_MEDIA, -s SOCIAL_MEDIA
                         Social media where the playlist will be posted
-                        (twitter or mastodon. Default : twitter).
+                        (twitter, mastodon or all. Default : all).
   --not-only-favorites, -n
                         The playlist will be composed of any tracks, not only
                         favorite tracks.
