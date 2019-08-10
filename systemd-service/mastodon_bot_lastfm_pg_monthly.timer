@@ -1,9 +1,0 @@
-[Unit]
-Description=mastodon_bot_lastfm_pg_monthly.timer
-
-[Timer]
-OnCalendar=*-*-1 10:30:00
-Persistent=true
-
-[Install]
-WantedBy=timers.target

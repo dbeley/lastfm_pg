@@ -27,7 +27,7 @@ logging.getLogger("pylast").setLevel(logging.WARNING)
 begin_time = datetime.datetime.now()
 
 TIMEFRAME_VALUES = ["7day", "1month", "3month", "6month", "12month", "overall"]
-SUPPORTED_SOCIAL_MEDIA = ["twitter", "mastodon"]
+SUPPORTED_SOCIAL_MEDIA = ["twitter", "mastodon", "all"]
 
 
 def main():
@@ -76,19 +76,20 @@ def main():
         list_message = format_playlist(playlist_tracks, title)
 
         # Create list of tweets complying with the max length of a social media
-        if social_media == "twitter":
+        if social_media in ["twitter", "all"]:
             api = twitterconnect()
             twitter_username = get_twitter_username(api)
             list_tweets = create_list_tweets(
-                list_message, social_media, args.hashtag, twitter_username
+                list_message, "twitter", args.hashtag, twitter_username
             )
-        else:
+            if not args.no_upload:
+                upload_list_tweets(list_tweets, "twitter")
+        if social_media in ["mastodon", "all"]:
             list_tweets = create_list_tweets(
-                list_message, social_media, args.hashtag
+                list_message, "mastodon", args.hashtag
             )
-
-        if not args.no_upload:
-            upload_list_tweets(list_tweets, social_media)
+            if not args.no_upload:
+                upload_list_tweets(list_tweets, "mastodon")
 
 
 def parse_args():
@@ -129,9 +130,9 @@ def parse_args():
     parser.add_argument(
         "--social-media",
         "-s",
-        help="Social media where the playlist will be posted (twitter or mastodon. Default : twitter).",
+        help="Social media where the playlist will be posted (twitter, mastodon or all. Default : all).",
         type=str,
-        default="twitter",
+        default="all",
     )
     parser.add_argument(
         "--not-only-favorites",
