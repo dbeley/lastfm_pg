@@ -20,63 +20,63 @@ def test_create_list_tweet_advanced():
         raise AssertionError()
 
     for i in list_tweets:
-        if not "#lastfm" in i:
+        if "#lastfm" not in i:
             raise AssertionError()
 
 
 def test_return_export_filename():
+    print(utils.return_export_filename(begin_time, "7day", "twitter", "user"))
     if not utils.return_export_filename(
-        begin_time, "7day", "twitter"
-    ).startswith("Exports/playlist_weekly"):
+        begin_time, "7day", "twitter", "user"
+    ).startswith("Exports/playlist_user_weekly"):
         raise AssertionError()
     if not utils.return_export_filename(
-        begin_time, "1month", "twitter"
-    ).startswith("Exports/playlist_monthly"):
+        begin_time, "1month", "twitter", "user"
+    ).startswith("Exports/playlist_user_monthly"):
         raise AssertionError()
     if not utils.return_export_filename(
-        begin_time, "3month", "twitter"
-    ).startswith("Exports/playlist_3months"):
+        begin_time, "3month", "twitter", "user"
+    ).startswith("Exports/playlist_user_3months"):
         raise AssertionError()
     if not utils.return_export_filename(
-        begin_time, "6month", "twitter"
-    ).startswith("Exports/playlist_6months"):
+        begin_time, "6month", "twitter", "user"
+    ).startswith("Exports/playlist_user_6months"):
         raise AssertionError()
     if not utils.return_export_filename(
-        begin_time, "12month", "twitter"
-    ).startswith("Exports/playlist_12months"):
+        begin_time, "12month", "twitter", "user"
+    ).startswith("Exports/playlist_user_12months"):
         raise AssertionError()
     if not utils.return_export_filename(
-        begin_time, "overall", "twitter"
-    ).startswith("Exports/playlist_overall"):
+        begin_time, "overall", "twitter", "user"
+    ).startswith("Exports/playlist_user_overall"):
         raise AssertionError()
 
 
 def test_return_title_playlist():
-    if not utils.return_title_playlist(begin_time, "7day").startswith(
-        "My most played favorites tracks on #lastfm for the week of "
+    if not utils.return_title_playlist(begin_time, "user", "7day").startswith(
+        "My most played favorite tracks on #lastfm for the week of "
     ):
         raise AssertionError()
-    if not utils.return_title_playlist(begin_time, "1month").startswith(
-        "My most played favorites tracks on #lastfm for "
+    if not utils.return_title_playlist(
+        begin_time, "user", "1month"
+    ).startswith("My most played favorite tracks on #lastfm for "):
+        raise AssertionError()
+    if (
+        not utils.return_title_playlist(begin_time, "user", "3month")
+        == "My most played favorite tracks on #lastfm for the last 3 months."
     ):
         raise AssertionError()
     if (
-        not utils.return_title_playlist(begin_time, "3month")
-        == "My most played favorites tracks on #lastfm for the last 3 months."
+        not utils.return_title_playlist(begin_time, "user", "6month")
+        == "My most played favorite tracks on #lastfm for the last 6 months."
     ):
         raise AssertionError()
-    if (
-        not utils.return_title_playlist(begin_time, "6month")
-        == "My most played favorites tracks on #lastfm for the last 6 months."
-    ):
+    if not utils.return_title_playlist(
+        begin_time, "user", "12month"
+    ).startswith("My most played favorite tracks on #lastfm for the year "):
         raise AssertionError()
     if (
-        not utils.return_title_playlist(begin_time, "12month")
-        == "My most played favorites tracks on #lastfm for the last 12 months."
-    ):
-        raise AssertionError()
-    if (
-        not utils.return_title_playlist(begin_time, "overall")
-        == "My most played favorites tracks on #lastfm ever."
+        not utils.return_title_playlist(begin_time, "user", "overall")
+        == "My most played favorite tracks on #lastfm ever."
     ):
         raise AssertionError()

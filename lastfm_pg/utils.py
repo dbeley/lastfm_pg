@@ -80,7 +80,7 @@ def format_playlist(playlist_tracks, title):
 
 
 def create_list_tweets(
-    list_message, social_media, hashtag, twitter_username=None
+    list_message, social_media, hashtag="#lastfm", twitter_username=None
 ):
     # Twitter needs the username to post an answer. Mastodon doesn't.
     if social_media == "mastodon":
@@ -209,7 +209,9 @@ def return_export_filename(begin_time, timeframe, social_media, user):
     return export_filename
 
 
-def return_title_playlist(begin_time, username, timeframe, template_file):
+def return_title_playlist(
+    begin_time, username, timeframe, template_file="tweet_template.txt"
+):
     """Return the title of playlist."""
 
     with open(template_file, "r") as f:
@@ -228,6 +230,6 @@ def return_title_playlist(begin_time, username, timeframe, template_file):
         start = begin_time - datetime.timedelta(weeks=1)
         timeframe = f"for the year {start.strftime('%Y')}"
     elif timeframe == "overall":
-        timeframe = f"ever."
+        timeframe = f"ever"
     title = eval(tweet_template)
     return title
