@@ -1,0 +1,17 @@
+[run]
+branch = True
+source = lastfm_pg
+
+[report]
+exclude_lines =
+    if self.debug:
+    pragma: no cover
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    raise AssertionError
+ignore_errors = True
+omit =
+    lastfm_pg/__init__.py
+    tests/*
+    setup.py
+
