@@ -30,7 +30,7 @@ TIMEFRAME_VALUES = ["7day", "1month", "3month", "6month", "12month", "overall"]
 SUPPORTED_SOCIAL_MEDIA = ["twitter", "mastodon", "all"]
 
 
-def main():
+def main():  # pragma: no cover
     args = parse_args()
     # create sample config file
     check_config(args.config_file)
@@ -92,7 +92,7 @@ def main():
                 upload_list_tweets(list_tweets, "mastodon")
 
 
-def parse_args():
+def parse_args():  # pragma: no cover
     custom_format = "%(levelname)s :: %(message)s"
     parser = argparse.ArgumentParser(
         description="Generate playlist of a user's favorite most played tracks\

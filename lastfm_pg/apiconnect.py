@@ -10,7 +10,7 @@ logger = logging.getLogger()
 logging.getLogger("pylast").setLevel(logging.WARNING)
 
 
-def check_config(config_file):
+def check_config(config_file):  # pragma: no cover
     config_file = os.path.expanduser(config_file)
     user_config_dir = os.path.expanduser("~/.config/lastfm_pg/")
 
@@ -68,7 +68,7 @@ def check_config(config_file):
         exit()
 
 
-def twitterconnect():
+def twitterconnect():  # pragma: no cover
     consumer_key = CONFIG["twitter"]["consumer_key"]
     secret_key = CONFIG["twitter"]["secret_key"]
     access_token = CONFIG["twitter"]["access_token"]
@@ -79,7 +79,7 @@ def twitterconnect():
     return tweepy.API(auth)
 
 
-def mastodonconnect():
+def mastodonconnect():  # pragma: no cover
     if not Path("mastodon_clientcred.secret").is_file():
         Mastodon.create_app(
             "mastodon_bot_lastfm_pg",
@@ -105,7 +105,7 @@ def mastodonconnect():
     return mastodon
 
 
-def lastfmconnect():
+def lastfmconnect():  # pragma: no cover
     api_key = CONFIG["lastfm"]["api_key"]
     api_secret = CONFIG["lastfm"]["api_secret"]
     username = CONFIG["lastfm"]["username"]
@@ -121,5 +121,4 @@ def get_twitter_username(api):
 
 
 def get_lastfm_username(api):
-    # return CONFIG["lastfm"]["username"]
     return api.username

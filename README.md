@@ -1,6 +1,8 @@
 # lastfm_pg : lastfm playlist generator
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5e1070dea74c4be1a8c1e2a083b6712f)](https://app.codacy.com/app/dbeley/lastfm_pg?utm_source=github.com&utm_medium=referral&utm_content=dbeley/lastfm_pg&utm_campaign=Badge_Grade_Dashboard)
+[![Build Status](https://travis-ci.com/dbeley/lastfm_pg.svg?branch=master)](https://travis-ci.com/dbeley/lastfm_pg)
+[![codecov](https://codecov.io/gh/dbeley/lastfm_pg/branch/master/graph/badge.svg)](https://codecov.io/gh/dbeley/lastfm_pg)
 
 Generate playlist of a user's favorite most played tracks for a certain timespan and post it to twitter or mastodon.
 
