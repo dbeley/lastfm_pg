@@ -52,10 +52,9 @@ def main():
         exit()
 
     if args.username:
-        list_users = args.username.split(",")
+        list_users = [x.strip() for x in args.username.split(",")]
     else:
-        username = [get_lastfm_username(network)]
-        user = network.get_user(username)
+        list_users = [get_lastfm_username(network)]
 
     for user in list_users:
         user = network.get_user(user)
