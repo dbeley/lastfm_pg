@@ -6,7 +6,7 @@ from .apiconnect import twitterconnect, mastodonconnect
 
 logger = logging.getLogger(__name__)
 PLAYLIST_LENGTH = 10
-TWITTER_MAX_CHARACTERS = 280
+TWITTER_MAX_CHARACTERS = 275
 MASTODON_MAX_CHARACTERS = 500
 
 
@@ -190,22 +190,22 @@ def export_playlist(
             )
 
 
-def return_export_filename(begin_time, timeframe, social_media, user):
+def return_export_filename(begin_time, timeframe, social_media, username):
     """Return the filename of an exported playlist."""
     if timeframe == "7day":
         start = begin_time - datetime.timedelta(weeks=1)
-        export_filename = f"Exports/playlist_{user}_weekly_{start.strftime('%d-%m-%Y')}_{social_media}.txt"
+        export_filename = f"Exports/playlist_{username}_weekly_{start.strftime('%d-%m-%Y')}_{social_media}.txt"
     elif timeframe == "1month":
         start = begin_time - datetime.timedelta(weeks=1)
-        export_filename = f"Exports/playlist_{user}_monthly_{begin_time.strftime('%m-%Y')}_{social_media}.txt"
+        export_filename = f"Exports/playlist_{username}_monthly_{begin_time.strftime('%m-%Y')}_{social_media}.txt"
     elif timeframe == "3month":
-        export_filename = f"Exports/playlist_{user}_3months_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
+        export_filename = f"Exports/playlist_{username}_3months_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
     elif timeframe == "6month":
-        export_filename = f"Exports/playlist_{user}_6months_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
+        export_filename = f"Exports/playlist_{username}_6months_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
     elif timeframe == "12month":
-        export_filename = f"Exports/playlist_{user}_12months_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
+        export_filename = f"Exports/playlist_{username}_12months_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
     elif timeframe == "overall":
-        export_filename = f"Exports/playlist_{user}_overall_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
+        export_filename = f"Exports/playlist_{username}_overall_{begin_time.strftime('%d-%m-%Y')}_{social_media}.txt"
     return export_filename
 
 
@@ -213,6 +213,27 @@ def return_title_playlist(
     begin_time, username, timeframe, template_file="tweet_template.txt"
 ):
     """Return the title of playlist."""
+
+    # Change username for specific lastfm accounts
+    username = str(username)
+    if username == "FIPdirect":
+        username = "FIP"
+    elif username == "FIProck":
+        username = "FIP Rock"
+    elif username == "FIPjazz":
+        username = "FIP Jazz"
+    elif username == "FIPgroove":
+        username = "FIP Groove"
+    elif username == "FIPmonde":
+        username = "FIP Monde"
+    elif username == "FIPnouveautes":
+        username = "FIP Nouveautés"
+    elif username == "FIPreggae":
+        username = "FIP Reggae"
+    elif username == "FIPelectro":
+        username = "FIP Electro"
+    elif username == "FIPmetal":
+        username = "FIP Metal"
 
     with open(template_file, "r") as f:
         tweet_template = f.read()
