@@ -12,14 +12,13 @@ MASTODON_MAX_CHARACTERS = 500
 
 def get_lastfm_playlist(user, timeframe, only_favorites=True):
     # List of recently played tracks
-    logger.info(
-        "Getting top tracks for timeframe %s for user %s.", timeframe, user
-    )
+    logger.info("Getting top tracks for timeframe %s for user %s.", timeframe, user)
     top_tracks = user.get_top_tracks(period=timeframe, limit=1000)
     if only_favorites:
         # List of all loved tracks
         # Need to extract all loved tracks, get_userloved() function doesn't seems to work
         logger.info("Getting all loved tracks for user %s.", user)
+        breakpoint()
         loved_tracks = user.get_loved_tracks(limit=None)
         loved_tracks = [x.track for x in loved_tracks]
 
@@ -45,9 +44,7 @@ def get_lastfm_playlist(user, timeframe, only_favorites=True):
             break
         logger.debug("Length playlist : %s.", len(playlist_tracks))
         # randomize to not take the first item by alphabetical order
-        randomized_dd_tracks = random.sample(
-            dd_tracks[count], len(dd_tracks[count])
-        )
+        randomized_dd_tracks = random.sample(dd_tracks[count], len(dd_tracks[count]))
         for track in randomized_dd_tracks:
             playlist_tracks.append([track, count])
             if len(playlist_tracks) >= PLAYLIST_LENGTH:
@@ -97,9 +94,7 @@ def create_list_tweets(
             message = next(iterator)
             list_tweets_temp.append(message)
             sum_list_tweets_temp = sum([len(x) for x in list_tweets_temp])
-            logger.debug(
-                "Number of characters for tweet : %s.", sum_list_tweets_temp
-            )
+            logger.debug("Number of characters for tweet : %s.", sum_list_tweets_temp)
             nb_char = (
                 # number \n
                 len(list_tweets_temp)
@@ -111,9 +106,7 @@ def create_list_tweets(
                 + len(hashtag)
             )
             if sum_list_tweets_temp > max_characters - nb_char:
-                logger.debug(
-                    "Max number of characters reached. Creating new tweet."
-                )
+                logger.debug("Max number of characters reached. Creating new tweet.")
                 last_message = list_tweets_temp[-1]
                 del list_tweets_temp[-1]
                 list_tweets.append(list_tweets_temp)
@@ -137,9 +130,7 @@ def create_list_tweets(
                     f"{message}\n{hashtag} [{index}/{max_index}]"
                 )
             else:
-                list_formatted_tweets.append(
-                    f"{message} [{index}/{max_index}]"
-                )
+                list_formatted_tweets.append(f"{message} [{index}/{max_index}]")
         else:
             # one message, no need for index nor hastag (present in the title)
             list_formatted_tweets.append(f"{message}")
@@ -174,13 +165,9 @@ def upload_list_tweets(list_messages, social_media):
             tweet_id = return_infos.id
 
 
-def export_playlist(
-    playlist_tracks, begin_time, timeframe, social_media, user
-):
+def export_playlist(playlist_tracks, begin_time, timeframe, social_media, user):
     """Export a playlist."""
-    export_filename = return_export_filename(
-        begin_time, timeframe, social_media, user
-    )
+    export_filename = return_export_filename(begin_time, timeframe, social_media, user)
     logger.info("Exporting playlist to %s.", export_filename)
     # Exporting playlist
     with open(export_filename, "w") as f:

@@ -58,14 +58,10 @@ def main():  # pragma: no cover
 
     for user in list_users:
         user = network.get_user(user)
-        playlist_tracks = get_lastfm_playlist(
-            user, args.timeframe, args.only_favorites
-        )
+        playlist_tracks = get_lastfm_playlist(user, args.timeframe, args.only_favorites)
 
         Path("Exports").mkdir(parents=True, exist_ok=True)
-        export_playlist(
-            playlist_tracks, begin_time, args.timeframe, social_media, user
-        )
+        export_playlist(playlist_tracks, begin_time, args.timeframe, social_media, user)
 
         title = return_title_playlist(
             begin_time, user, args.timeframe, args.template_file
@@ -84,9 +80,7 @@ def main():  # pragma: no cover
             if not args.no_upload:
                 upload_list_tweets(list_tweets, "twitter")
         if social_media in ["mastodon", "all"]:
-            list_tweets = create_list_tweets(
-                list_message, "mastodon", args.hashtag
-            )
+            list_tweets = create_list_tweets(list_message, "mastodon", args.hashtag)
             if not args.no_upload:
                 upload_list_tweets(list_tweets, "mastodon")
 

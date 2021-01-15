@@ -33,10 +33,7 @@ def check_config(config_file):  # pragma: no cover
     else:
         if not os.path.exists(user_config_dir):
             logger.info(
-                (
-                    "Configuration folder not found. "
-                    "Creating ~/.config/lastfm_pg/."
-                )
+                ("Configuration folder not found. " "Creating ~/.config/lastfm_pg/.")
             )
             os.makedirs(user_config_dir)
         if not Path(config_file).is_file():

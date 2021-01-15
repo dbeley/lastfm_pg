@@ -7,8 +7,8 @@ verify_ssl = true
 pytest = "*"
 
 [packages]
-lastfm-pg = {editable = true,path = "."}
+lastfm-pg = {editable = true, path = "."}
 e1839a8 = {editable = true,path = "."}
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"
