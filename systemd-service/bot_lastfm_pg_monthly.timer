@@ -2,7 +2,7 @@
 Description=bot_lastfm_pg_monthly.timer
 
 [Timer]
-OnCalendar=*-*-1 09:00:00
+OnCalendar=*-*-1 09:30:00
 Persistent=true
 
 [Install]
