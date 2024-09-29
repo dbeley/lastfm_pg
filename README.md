@@ -70,7 +70,7 @@ systemctl --user enable --now mastodon_lastfm_pg_weekly.timer
 
 ## Template
 
-The posted tweets will follow the template. See the tweet_template.txt file for an example.
+The posted tweets will follow a template. See `tweet_template.txt` for an example.
 
 Available variables :
 
