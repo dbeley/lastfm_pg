@@ -8,3 +8,4 @@ Exports/
 archives/
 *.egg-info/
 *__pycache__/
+.direnv

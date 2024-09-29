@@ -2,7 +2,6 @@ from pathlib import Path
 import logging
 import configparser
 import pylast
-import tweepy
 import os
 from mastodon import Mastodon
 
@@ -43,12 +42,6 @@ def check_config(config_file):  # pragma: no cover
                 "api_key=api_key_here\n"
                 "api_secret=api_secret_here\n"
                 "\n"
-                "[twitter]\n"
-                "consumer_key=consumer_key_here\n"
-                "secret_key=secret_key_here\n"
-                "access_token=access_token_here\n"
-                "access_token_secret=access_token_secret_here\n"
-                "\n"
                 "[mastodon]\n"
                 "api_base_url=api_base_url_here\n"
                 "login_email=login_email_here\n"
@@ -63,17 +56,6 @@ def check_config(config_file):  # pragma: no cover
                 )
             )
         exit()
-
-
-def twitterconnect():  # pragma: no cover
-    consumer_key = CONFIG["twitter"]["consumer_key"]
-    secret_key = CONFIG["twitter"]["secret_key"]
-    access_token = CONFIG["twitter"]["access_token"]
-    access_token_secret = CONFIG["twitter"]["access_token_secret"]
-
-    auth = tweepy.OAuthHandler(consumer_key, secret_key)
-    auth.set_access_token(access_token, access_token_secret)
-    return tweepy.API(auth)
 
 
 def mastodonconnect():  # pragma: no cover
@@ -111,10 +93,6 @@ def lastfmconnect():  # pragma: no cover
         api_key=api_key, api_secret=api_secret, username=username
     )
     return network
-
-
-def get_twitter_username(api):
-    return api.me().screen_name
 
 
 def get_lastfm_username(api):

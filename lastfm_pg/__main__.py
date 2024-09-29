@@ -18,8 +18,6 @@ from .apiconnect import (
     lastfmconnect,
     check_config,
     get_lastfm_username,
-    twitterconnect,
-    get_twitter_username,
 )
 
 logger = logging.getLogger()
@@ -27,7 +25,7 @@ logging.getLogger("pylast").setLevel(logging.WARNING)
 begin_time = datetime.datetime.now()
 
 TIMEFRAME_VALUES = ["7day", "1month", "3month", "6month", "12month", "overall"]
-SUPPORTED_SOCIAL_MEDIA = ["twitter", "mastodon", "all"]
+SUPPORTED_SOCIAL_MEDIA = ["mastodon", "all"]
 
 
 def main():  # pragma: no cover
@@ -71,14 +69,6 @@ def main():  # pragma: no cover
         list_message = format_playlist(playlist_tracks, title)
 
         # Create list of tweets complying with the max length of a social media
-        if social_media in ["twitter", "all"]:
-            api = twitterconnect()
-            twitter_username = get_twitter_username(api)
-            list_tweets = create_list_tweets(
-                list_message, "twitter", args.hashtag, twitter_username
-            )
-            if not args.no_upload:
-                upload_list_tweets(list_tweets, "twitter")
         if social_media in ["mastodon", "all"]:
             list_tweets = create_list_tweets(list_message, "mastodon", args.hashtag)
             if not args.no_upload:
@@ -89,7 +79,7 @@ def parse_args():  # pragma: no cover
     custom_format = "%(levelname)s :: %(message)s"
     parser = argparse.ArgumentParser(
         description="Generate playlist of a user's favorite most played tracks\
-                for the last week and post it to twitter or mastodon."
+                for the last week and post it to mastodon."
     )
     parser.add_argument(
         "--debug",
@@ -123,7 +113,7 @@ def parse_args():  # pragma: no cover
     parser.add_argument(
         "--social-media",
         "-s",
-        help="Social media where the playlist will be posted (twitter, mastodon or all. Default : all).",
+        help="Social media where the playlist will be posted (mastodon or all. Default : all).",
         type=str,
         default="all",
     )

@@ -2,11 +2,10 @@ import logging
 import random
 import datetime
 from collections import defaultdict
-from .apiconnect import twitterconnect, mastodonconnect
+from .apiconnect import mastodonconnect
 
 logger = logging.getLogger(__name__)
 PLAYLIST_LENGTH = 10
-TWITTER_MAX_CHARACTERS = 275
 MASTODON_MAX_CHARACTERS = 500
 
 
@@ -77,14 +76,9 @@ def format_playlist(playlist_tracks, title):
 
 
 def create_list_tweets(
-    list_message, social_media, hashtag="#lastfm", twitter_username=None
-):
-    # Twitter needs the username to post an answer. Mastodon doesn't.
+    list_message, social_media, hashtag="#lastfm"):
     if social_media == "mastodon":
         max_characters = MASTODON_MAX_CHARACTERS
-        twitter_username = ""
-    elif social_media == "twitter":
-        max_characters = TWITTER_MAX_CHARACTERS
     iterator = iter(list_message)
     list_tweets_temp = []
     list_tweets = []
@@ -100,8 +94,6 @@ def create_list_tweets(
                 len(list_tweets_temp)
                 # index
                 + len("[10/10]")
-                # twitter username
-                + len(f"@{twitter_username}")
                 # hashtag
                 + len(hashtag)
             )
@@ -121,9 +113,6 @@ def create_list_tweets(
     for index, tweet in enumerate(list_tweets, 1):
         message = "\n".join(tweet)
         if max_index > 1:
-            # add username for all twitter messages except the first one
-            if index != 1 and twitter_username:
-                message = f"@{twitter_username}\n{message}"
             if index != 1:
                 # add hashtag + index number
                 list_formatted_tweets.append(
@@ -140,9 +129,7 @@ def create_list_tweets(
 def upload_list_tweets(list_messages, social_media):
     """Upload a list of messages to a social media."""
     tweet_id = None
-    if social_media == "twitter":
-        api = twitterconnect()
-    elif social_media == "mastodon":
+    if social_media == "mastodon":
         api = mastodonconnect()
     for index, tweet in enumerate(list_messages, 1):
         logger.debug("Posting tweet %s.", index)
@@ -153,16 +140,6 @@ def upload_list_tweets(list_messages, social_media):
             else:
                 toot = api.status_post(tweet)
             tweet_id = toot["id"]
-        elif social_media == "twitter":
-            logger.info("Posting to twitter.")
-            if tweet_id:
-                # reply to previous tweet
-                return_infos = api.update_status(
-                    status=tweet, in_reply_to_status_id=tweet_id
-                )
-            else:
-                return_infos = api.update_status(status=tweet)
-            tweet_id = return_infos.id
 
 
 def export_playlist(playlist_tracks, begin_time, timeframe, social_media, user):

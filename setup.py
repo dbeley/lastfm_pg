@@ -20,5 +20,5 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "Operating System :: POSIX :: Linux",
     ],
-    install_requires=["pylast", "tweepy", "Mastodon.py"],
+    install_requires=["pylast", "Mastodon.py"],
 )

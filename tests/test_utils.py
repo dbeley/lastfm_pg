@@ -6,7 +6,7 @@ begin_time = datetime.datetime.now()
 
 def test_create_list_tweet_simple():
     playlist = ["TRACK 1", "TRACK 2"]
-    list_tweets = utils.create_list_tweets(playlist, "twitter")
+    list_tweets = utils.create_list_tweets(playlist, "mastodon")
     print(list_tweets)
     if not list_tweets == ["TRACK 1\nTRACK 2"]:
         raise AssertionError()
@@ -14,9 +14,9 @@ def test_create_list_tweet_simple():
 
 def test_create_list_tweet_advanced():
     playlist = ["#lastfm"] + ["TRACK"] * 200
-    list_tweets = utils.create_list_tweets(playlist, "twitter")
+    list_tweets = utils.create_list_tweets(playlist, "mastodon")
     print(list_tweets)
-    if not len(list_tweets) == 5:
+    if not len(list_tweets) == 3:
         raise AssertionError()
 
     for i in list_tweets:
@@ -25,29 +25,29 @@ def test_create_list_tweet_advanced():
 
 
 def test_return_export_filename():
-    print(utils.return_export_filename(begin_time, "7day", "twitter", "user"))
+    print(utils.return_export_filename(begin_time, "7day", "mastodon", "user"))
     if not utils.return_export_filename(
-        begin_time, "7day", "twitter", "user"
+        begin_time, "7day", "mastodon", "user"
     ).startswith("Exports/playlist_user_weekly"):
         raise AssertionError()
     if not utils.return_export_filename(
-        begin_time, "1month", "twitter", "user"
+        begin_time, "1month", "mastodon", "user"
     ).startswith("Exports/playlist_user_monthly"):
         raise AssertionError()
     if not utils.return_export_filename(
-        begin_time, "3month", "twitter", "user"
+        begin_time, "3month", "mastodon", "user"
     ).startswith("Exports/playlist_user_3months"):
         raise AssertionError()
     if not utils.return_export_filename(
-        begin_time, "6month", "twitter", "user"
+        begin_time, "6month", "mastodon", "user"
     ).startswith("Exports/playlist_user_6months"):
         raise AssertionError()
     if not utils.return_export_filename(
-        begin_time, "12month", "twitter", "user"
+        begin_time, "12month", "mastodon", "user"
     ).startswith("Exports/playlist_user_12months"):
         raise AssertionError()
     if not utils.return_export_filename(
-        begin_time, "overall", "twitter", "user"
+        begin_time, "overall", "mastodon", "user"
     ).startswith("Exports/playlist_user_overall"):
         raise AssertionError()
 
