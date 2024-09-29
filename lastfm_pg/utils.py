@@ -5,11 +5,10 @@ from collections import defaultdict
 from .apiconnect import mastodonconnect
 
 logger = logging.getLogger(__name__)
-PLAYLIST_LENGTH = 10
 MASTODON_MAX_CHARACTERS = 500
 
 
-def get_lastfm_playlist(user, timeframe, only_favorites=True):
+def get_lastfm_playlist(user, timeframe, playlist_size, only_favorites=True):
     # List of recently played tracks
     logger.info("Getting top tracks for timeframe %s for user %s.", timeframe, user)
     top_tracks = user.get_top_tracks(period=timeframe, limit=1000)
@@ -17,7 +16,6 @@ def get_lastfm_playlist(user, timeframe, only_favorites=True):
         # List of all loved tracks
         # Need to extract all loved tracks, get_userloved() function doesn't seems to work
         logger.info("Getting all loved tracks for user %s.", user)
-        breakpoint()
         loved_tracks = user.get_loved_tracks(limit=None)
         loved_tracks = [x.track for x in loved_tracks]
 
@@ -38,15 +36,15 @@ def get_lastfm_playlist(user, timeframe, only_favorites=True):
     playlist_tracks = []
     count = max(dd_tracks.keys())
     logger.info("Creating playlist.")
-    while len(playlist_tracks) <= PLAYLIST_LENGTH | count >= 1:
-        if len(playlist_tracks) >= PLAYLIST_LENGTH:
+    while len(playlist_tracks) <= playlist_size | count >= 1:
+        if len(playlist_tracks) >= playlist_size:
             break
         logger.debug("Length playlist : %s.", len(playlist_tracks))
         # randomize to not take the first item by alphabetical order
         randomized_dd_tracks = random.sample(dd_tracks[count], len(dd_tracks[count]))
         for track in randomized_dd_tracks:
             playlist_tracks.append([track, count])
-            if len(playlist_tracks) >= PLAYLIST_LENGTH:
+            if len(playlist_tracks) >= playlist_size:
                 break
         count -= 1
     return playlist_tracks

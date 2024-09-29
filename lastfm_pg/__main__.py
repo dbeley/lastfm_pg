@@ -22,6 +22,7 @@ from .apiconnect import (
 
 logger = logging.getLogger()
 logging.getLogger("pylast").setLevel(logging.WARNING)
+logging.getLogger("httpx").setLevel(logging.WARNING)
 begin_time = datetime.datetime.now()
 
 TIMEFRAME_VALUES = ["7day", "1month", "3month", "6month", "12month", "overall"]
@@ -56,7 +57,7 @@ def main():  # pragma: no cover
 
     for user in list_users:
         user = network.get_user(user)
-        playlist_tracks = get_lastfm_playlist(user, args.timeframe, args.only_favorites)
+        playlist_tracks = get_lastfm_playlist(user, args.timeframe, 10, args.only_favorites)
 
         Path("Exports").mkdir(parents=True, exist_ok=True)
         export_playlist(playlist_tracks, begin_time, args.timeframe, social_media, user)
