@@ -49,28 +49,35 @@ def get_lastfm_playlist(user, timeframe, playlist_size, only_favorites=True):
         count -= 1
     return playlist_tracks
 
-
-def format_playlist(playlist_tracks, title):
-    # Creating message list
-    # headers_message = [title, "Made with https://github.com/dbeley/lastfm_pg"]
-    headers_message = [title]
+def format_playlist(playlist_tracks, title, csv=False):
+    if csv:
+        # header
+        headers_message = []
+        list_message.append("position;artist;title;playcount")
+    else:
+        headers_message = [title]
     list_message = []
-    # Reversed order so it goes from 10 to 1
-    for index, track in reversed(list(enumerate(playlist_tracks, 1))):
-        logger.debug(
-            "%s: %s - %s (%s).",
-            str(index).zfill(2),
-            track[0].artist,
-            track[0].title,
-            track[1],
-        )
-        list_message.append(
-            f"{str(index).zfill(2)}: {track[0].artist} - {track[0].title} ({track[1]} plays)"
-        )
-    list_message.insert(0, headers_message[0])
-    # uncomment if two items in headers_message
-    # list_message.append(headers_message[1])
-    return list_message
+    if csv:
+        for index, track in list(enumerate(playlist_tracks, 1)):
+            list_message.append(
+                f"{str(index).zfill(2)};{track[0].artist};{track[0].title};{track[1]}"
+            )
+    else:
+        # Reversed order so it goes from 10 to 1
+        for index, track in reversed(list(enumerate(playlist_tracks, 1))):
+            logger.debug(
+                "%s: %s - %s (%s).",
+                str(index).zfill(2),
+                track[0].artist,
+                track[0].title,
+                track[1],
+            )
+            list_message.append(
+                f"{str(index).zfill(2)}: {track[0].artist} - {track[0].title} ({track[1]} plays)"
+            )
+        list_message.insert(0, headers_message[0])
+        return list_message
+    return "\n".join(list_message)
 
 
 def create_list_tweets(
