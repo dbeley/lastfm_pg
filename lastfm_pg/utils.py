@@ -50,13 +50,12 @@ def get_lastfm_playlist(user, timeframe, playlist_size, only_favorites=True):
     return playlist_tracks
 
 def format_playlist(playlist_tracks, title, csv=False):
+    list_message = []
     if csv:
-        # header
         headers_message = []
         list_message.append("position;artist;title;playcount")
     else:
         headers_message = [title]
-    list_message = []
     if csv:
         for index, track in list(enumerate(playlist_tracks, 1)):
             list_message.append(
