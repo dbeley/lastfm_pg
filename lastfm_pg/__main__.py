@@ -2,22 +2,23 @@
 lastfm playlist generator : generate playlist based on most played favorites
                             tracks of a lastfm user for a certain timeframe
 """
-import logging
 import argparse
 import datetime
+import logging
 from pathlib import Path
-from .utils import (
-    create_list_tweets,
-    upload_list_tweets,
-    get_lastfm_playlist,
-    return_title_playlist,
-    export_playlist,
-    format_playlist,
-)
+
 from .apiconnect import (
-    lastfmconnect,
     check_config,
     get_lastfm_username,
+    lastfmconnect,
+)
+from .utils import (
+    create_list_tweets,
+    export_playlist,
+    format_playlist,
+    get_lastfm_playlist,
+    return_title_playlist,
+    upload_list_tweets,
 )
 
 logger = logging.getLogger()

@@ -1,3 +1,37 @@
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta:__legacy__"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lastfm_pg"
+version = "0.1"
+description = "Generate playlists from the top tracks listened by a lastfm user"
+authors = [{name = "dbeley", email = "dbeley@protonmail.com"}]
+license = {text = "GPL-3.0-only"}
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "pylast",
+    "Mastodon.py",
+]
+
+[project.urls]
+Homepage = "https://github.com/dbeley/lastfm_pg"
+
+[project.scripts]
+lastfm_pg = "lastfm_pg.__main__:main"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["lastfm_pg"]
+branch = true

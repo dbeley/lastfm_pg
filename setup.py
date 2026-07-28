@@ -1,7 +1,8 @@
 import setuptools
+
 import lastfm_pg
 
-with open("README.md", "r") as fh:
+with open("README.md") as fh:
     long_description = fh.read()
 
 setuptools.setup(
@@ -12,7 +13,7 @@ setuptools.setup(
     description="Generate playlists from the top tracks listened by a lastfm user.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/dbeley/lastmf_pg",
+    url="https://github.com/dbeley/lastfm_pg",
     packages=setuptools.find_packages(),
     include_package_data=True,
     entry_points={"console_scripts": ["lastfm_pg=lastfm_pg.__main__:main"]},

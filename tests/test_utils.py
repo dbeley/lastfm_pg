@@ -1,5 +1,6 @@
-from lastfm_pg import utils
 import datetime
+
+from lastfm_pg import utils
 
 begin_time = datetime.datetime.now()
 
