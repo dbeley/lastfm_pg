@@ -4,15 +4,15 @@ build-backend = "hatchling.build"
 
 [project]
 name = "lastfm_pg"
-version = "0.1"
+version = "0.2"
 description = "Generate playlists from the top tracks listened by a lastfm user"
 authors = [{name = "dbeley", email = "dbeley@protonmail.com"}]
 license = {text = "GPL-3.0-only"}
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "pylast",
-    "Mastodon.py",
+    "pylast>=7.1",
+    "Mastodon.py>=2.2",
 ]
 
 [project.urls]
