@@ -1,15 +1,7 @@
-with import <nixpkgs> { };
-
-let
-  pythonPackages = python3Packages;
-in pkgs.mkShell {
-  buildInputs = [
-    pythonPackages.python
-
-    pythonPackages.pytest
-    pythonPackages.black
-    pythonPackages.pylast
-    pythonPackages.mastodon-py
-  ];
-
-}
+(import (
+  fetchTarball {
+    url = "https://github.com/edolstra/flake-compat/archive/master.tar.gz";
+  }
+) {
+  src = ./.;
+}).shellNix

@@ -9,3 +9,5 @@ archives/
 *.egg-info/
 *__pycache__/
 .direnv
+result
+result-*
