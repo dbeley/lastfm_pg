@@ -1,7 +1,8 @@
+import datetime
 import logging
 import random
-import datetime
 from collections import defaultdict
+
 from .apiconnect import mastodonconnect
 
 logger = logging.getLogger(__name__)
@@ -203,7 +204,7 @@ def return_title_playlist(
     elif username == "FIPmetal":
         username = "FIP Metal"
 
-    with open(template_file, "r") as f:
+    with open(template_file) as f:
         tweet_template = f.read()
     if timeframe == "7day":
         start = begin_time - datetime.timedelta(weeks=1)
@@ -212,13 +213,13 @@ def return_title_playlist(
         start = begin_time - datetime.timedelta(weeks=1)
         timeframe = f"for {start.strftime('%B %Y')}"
     elif timeframe == "3month":
-        timeframe = f"for the last 3 months"
+        timeframe = "for the last 3 months"
     elif timeframe == "6month":
-        timeframe = f"for the last 6 months"
+        timeframe = "for the last 6 months"
     elif timeframe == "12month":
         start = begin_time - datetime.timedelta(weeks=1)
         timeframe = f"for the year {start.strftime('%Y')}"
     elif timeframe == "overall":
-        timeframe = f"ever"
+        timeframe = "ever"
     title = eval(tweet_template)
     return title

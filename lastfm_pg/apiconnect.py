@@ -1,8 +1,9 @@
-from pathlib import Path
-import logging
 import configparser
-import pylast
+import logging
 import os
+from pathlib import Path
+
+import pylast
 from mastodon import Mastodon
 
 logger = logging.getLogger()
@@ -19,7 +20,7 @@ def check_config(config_file):  # pragma: no cover
             global CONFIG
             CONFIG = configparser.ConfigParser()
             CONFIG.read(config_file)
-            api_key = CONFIG["lastfm"]["api_key"]
+            _api_key = CONFIG["lastfm"]["api_key"]
         except Exception as e:
             logger.error(
                 (
@@ -32,7 +33,7 @@ def check_config(config_file):  # pragma: no cover
     else:
         if not os.path.exists(user_config_dir):
             logger.info(
-                ("Configuration folder not found. " "Creating ~/.config/lastfm_pg/.")
+                "Configuration folder not found. " "Creating ~/.config/lastfm_pg/."
             )
             os.makedirs(user_config_dir)
         if not Path(config_file).is_file():
@@ -50,10 +51,10 @@ def check_config(config_file):  # pragma: no cover
             with open(config_file, "w") as f:
                 f.write(sample_config)
             logger.info(
-                (
+
                     "A sample configuration file has been created at "
                     "~/.config/lastfm_pg/config.ini."
-                )
+
             )
         exit()
 
