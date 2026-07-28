@@ -34,4 +34,4 @@ jobs:
     - name: Test with pytest
       run: |
         pytest --cov=lastfm_pg tests
-    - uses: codecov/codecov-action@v4
+    - uses: codecov/codecov-action@v7
